@@ -28,8 +28,6 @@ import androidx.compose.ui.unit.sp
 import com.j2merunner.app.GameActivity
 import com.j2merunner.app.GameRepository
 import com.j2merunner.app.JarLoader
-import kotlinx.coroutines.launch
-import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,9 +35,7 @@ fun GameListScreen(
     onNavigateToSettings: () -> Unit
 ) {
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
     val repository = remember { GameRepository(context) }
-
     var games by remember { mutableStateOf<List<JarLoader.JarInfo>>(emptyList()) }
     var isLoading by remember { mutableStateOf(false) }
 
@@ -85,9 +81,7 @@ fun GameListScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {
-                    launcher.launch(arrayOf("*/*"))
-                },
+                onClick = { launcher.launch(arrayOf("*/*")) },
                 containerColor = Color(0xFF0066CC),
                 shape = RoundedCornerShape(16.dp)
             ) {
