@@ -4,9 +4,9 @@ package com.j2merunner.engine.midp
  * Bridge for javax.microedition.lcdui.Command
  */
 class Command(
-    val label: String,
-    val commandType: Int,
-    val priority: Int
+    private val cmdLabel: String,
+    private val cmdType: Int,
+    private val cmdPriority: Int
 ) {
     companion object {
         const val SCREEN = 1
@@ -19,9 +19,14 @@ class Command(
         const val ITEM = 8
     }
 
-    fun getLabel(): String = label
-    fun getCommandType(): Int = commandType
-    fun getPriority(): Int = priority
+    @JvmName("getLabelValue")
+    fun getLabel(): String = cmdLabel
+
+    @JvmName("getCommandTypeValue")
+    fun getCommandType(): Int = cmdType
+
+    @JvmName("getPriorityValue")
+    fun getPriority(): Int = cmdPriority
 }
 
 /**
