@@ -1,11 +1,6 @@
 package com.j2merunner.engine.midp
 
-/**
- * Bridge for javax.microedition.lcdui.Canvas
- * Maps to Android rendering surface
- */
 abstract class Canvas {
-
     companion object {
         const val KEY_NUM0 = 48
         const val KEY_NUM1 = 49
@@ -45,87 +40,27 @@ abstract class Canvas {
     private var height = 320
     private var fullScreenMode = false
 
-    /**
-     * Called when the canvas needs to be repainted
-     */
     abstract fun paint(g: Graphics)
 
-    /**
-     * Called when a key is pressed
-     */
     open fun keyPressed(keyCode: Int) {}
-
-    /**
-     * Called when a key is released
-     */
     open fun keyReleased(keyCode: Int) {}
-
-    /**
-     * Called when a key is repeated
-     */
     open fun keyRepeated(keyCode: Int) {}
-
-    /**
-     * Called when the pointer is pressed
-     */
     open fun pointerPressed(x: Int, y: Int) {}
-
-    /**
-     * Called when the pointer is released
-     */
     open fun pointerReleased(x: Int, y: Int) {}
-
-    /**
-     * Called when the pointer is dragged
-     */
     open fun pointerDragged(x: Int, y: Int) {}
 
-    /**
-     * Request a repaint of the canvas
-     */
-    fun repaint() {
-        // Trigger re-render on Android side
-    }
+    fun repaint() {}
+    fun repaint(x: Int, y: Int, width: Int, height: Int) {}
+    fun serviceRepaints() {}
 
-    /**
-     * Request a repaint of a specific region
-     */
-    fun repaint(x: Int, y: Int, width: Int, height: Int) {
-        // Trigger re-render for region
-    }
-
-    /**
-     * Force immediate repaint
-     */
-    fun serviceRepaints() {
-        // Force immediate paint
-    }
-
-    /**
-     * Set fullscreen mode
-     */
     fun setFullScreenMode(mode: Boolean) {
         fullScreenMode = mode
     }
 
-    /**
-     * Check if fullscreen mode is enabled
-     */
     fun isFullScreenMode(): Boolean = fullScreenMode
-
-    /**
-     * Get canvas width
-     */
     fun getWidth(): Int = width
-
-    /**
-     * Get canvas height
-     */
     fun getHeight(): Int = height
 
-    /**
-     * Get game action for key code
-     */
     fun getGameAction(keyCode: Int): Int {
         return when (keyCode) {
             KEY_UP, KEY_NUM2 -> UP
@@ -137,9 +72,6 @@ abstract class Canvas {
         }
     }
 
-    /**
-     * Get key code for game action
-     */
     fun getKeyCode(gameAction: Int): Int {
         return when (gameAction) {
             UP -> KEY_UP
@@ -151,9 +83,6 @@ abstract class Canvas {
         }
     }
 
-    /**
-     * Get key name for key code
-     */
     fun getKeyName(keyCode: Int): String {
         return when (keyCode) {
             KEY_NUM0 -> "0"
@@ -179,24 +108,10 @@ abstract class Canvas {
         }
     }
 
-    /**
-     * Check if key is repeated
-     */
     fun hasPointerEvents(): Boolean = true
-
-    /**
-     * Check if pointer motion events are supported
-     */
     fun hasPointerMotionEvents(): Boolean = true
-
-    /**
-     * Check if repeated key events are supported
-     */
     fun hasRepeatEvents(): Boolean = true
 
-    /**
-     * Set internal dimensions (called by renderer)
-     */
     internal fun setDimensions(w: Int, h: Int) {
         width = w
         height = h
