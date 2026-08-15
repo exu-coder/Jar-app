@@ -47,7 +47,6 @@ fun GamePlayerScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            // Game Canvas Area
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -60,18 +59,12 @@ fun GamePlayerScreen(
 (JAR: $jarPath)",
                     color = Color(0xFF00D4FF)
                 )
-                // TODO: Integrate GameCanvasView here
             }
 
-            // Virtual Keypad
             if (showKeypad) {
                 VirtualKeypad(
-                    onKeyPress = { keyCode ->
-                        // TODO: Forward to game engine
-                    },
-                    onKeyRelease = { keyCode ->
-                        // TODO: Forward to game engine
-                    }
+                    onKeyPress = {},
+                    onKeyRelease = {}
                 )
             }
         }
