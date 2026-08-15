@@ -6,12 +6,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.Typeface
 
-/**
- * Bridge for javax.microedition.lcdui.Graphics
- * Wraps Android Canvas with J2ME-compatible API
- */
 class Graphics(private val androidCanvas: AndroidCanvas, private val paint: Paint) {
-
     companion object {
         const val HCENTER = 1
         const val VCENTER = 2
@@ -34,46 +29,23 @@ class Graphics(private val androidCanvas: AndroidCanvas, private val paint: Pain
         textSize = 12f
     }
 
-    /**
-     * Set the current color
-     */
     fun setColor(rgb: Int) {
         paint.color = 0xFF000000.toInt() or (rgb and 0xFFFFFF)
     }
 
-    /**
-     * Set color using RGB components
-     */
     fun setColor(red: Int, green: Int, blue: Int) {
         paint.color = android.graphics.Color.rgb(red, green, blue)
     }
 
-    /**
-     * Set grayscale color
-     */
     fun setGrayScale(value: Int) {
         val gray = value.coerceIn(0, 255)
         paint.color = android.graphics.Color.rgb(gray, gray, gray)
     }
 
-    /**
-     * Get the current red component
-     */
     fun getRedComponent(): Int = android.graphics.Color.red(paint.color)
-
-    /**
-     * Get the current green component
-     */
     fun getGreenComponent(): Int = android.graphics.Color.green(paint.color)
-
-    /**
-     * Get the current blue component
-     */
     fun getBlueComponent(): Int = android.graphics.Color.blue(paint.color)
 
-    /**
-     * Get the current grayscale value
-     */
     fun getGrayScale(): Int {
         val color = paint.color
         val r = android.graphics.Color.red(color)
@@ -82,22 +54,9 @@ class Graphics(private val androidCanvas: AndroidCanvas, private val paint: Pain
         return (r + g + b) / 3
     }
 
-    /**
-     * Get current color
-     */
     fun getColor(): Int = paint.color and 0xFFFFFF
+    fun setStrokeStyle(style: Int) {}
 
-    /**
-     * Set stroke style
-     */
-    fun setStrokeStyle(style: Int) {
-        // SOLID = 0, DOTTED = 1
-        // Android doesn't support dotted strokes easily, keep solid
-    }
-
-    /**
-     * Draw a line
-     */
     fun drawLine(x1: Int, y1: Int, x2: Int, y2: Int) {
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 1f
@@ -110,9 +69,6 @@ class Graphics(private val androidCanvas: AndroidCanvas, private val paint: Pain
         )
     }
 
-    /**
-     * Draw a rectangle
-     */
     fun drawRect(x: Int, y: Int, width: Int, height: Int) {
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 1f
@@ -125,9 +81,6 @@ class Graphics(private val androidCanvas: AndroidCanvas, private val paint: Pain
         )
     }
 
-    /**
-     * Fill a rectangle
-     */
     fun fillRect(x: Int, y: Int, width: Int, height: Int) {
         paint.style = Paint.Style.FILL
         androidCanvas.drawRect(
@@ -139,9 +92,6 @@ class Graphics(private val androidCanvas: AndroidCanvas, private val paint: Pain
         )
     }
 
-    /**
-     * Draw a rounded rectangle
-     */
     fun drawRoundRect(x: Int, y: Int, width: Int, height: Int, arcWidth: Int, arcHeight: Int) {
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 1f
@@ -156,9 +106,6 @@ class Graphics(private val androidCanvas: AndroidCanvas, private val paint: Pain
         )
     }
 
-    /**
-     * Fill a rounded rectangle
-     */
     fun fillRoundRect(x: Int, y: Int, width: Int, height: Int, arcWidth: Int, arcHeight: Int) {
         paint.style = Paint.Style.FILL
         androidCanvas.drawRoundRect(
@@ -172,9 +119,6 @@ class Graphics(private val androidCanvas: AndroidCanvas, private val paint: Pain
         )
     }
 
-    /**
-     * Draw an arc
-     */
     fun drawArc(x: Int, y: Int, width: Int, height: Int, startAngle: Int, arcAngle: Int) {
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 1f
@@ -190,9 +134,6 @@ class Graphics(private val androidCanvas: AndroidCanvas, private val paint: Pain
         )
     }
 
-    /**
-     * Fill an arc
-     */
     fun fillArc(x: Int, y: Int, width: Int, height: Int, startAngle: Int, arcAngle: Int) {
         paint.style = Paint.Style.FILL
         androidCanvas.drawArc(
@@ -207,9 +148,6 @@ class Graphics(private val androidCanvas: AndroidCanvas, private val paint: Pain
         )
     }
 
-    /**
-     * Draw a string
-     */
     fun drawString(str: String, x: Int, y: Int, anchor: Int) {
         val fm = paint.fontMetrics
         val textWidth = paint.measureText(str)
@@ -228,30 +166,18 @@ class Graphics(private val androidCanvas: AndroidCanvas, private val paint: Pain
         androidCanvas.drawText(str, drawX, drawY, paint)
     }
 
-    /**
-     * Draw a substring
-     */
     fun drawSubstring(str: String, offset: Int, len: Int, x: Int, y: Int, anchor: Int) {
         drawString(str.substring(offset, offset + len), x, y, anchor)
     }
 
-    /**
-     * Draw a character
-     */
     fun drawChar(character: Char, x: Int, y: Int, anchor: Int) {
         drawString(character.toString(), x, y, anchor)
     }
 
-    /**
-     * Draw characters
-     */
     fun drawChars(data: CharArray, offset: Int, length: Int, x: Int, y: Int, anchor: Int) {
         drawString(String(data, offset, length), x, y, anchor)
     }
 
-    /**
-     * Draw an image
-     */
     fun drawImage(img: Image, x: Int, y: Int, anchor: Int) {
         val bitmap = img.getBitmap() ?: return
 
@@ -266,9 +192,6 @@ class Graphics(private val androidCanvas: AndroidCanvas, private val paint: Pain
         androidCanvas.drawBitmap(bitmap, drawX.toFloat(), drawY.toFloat(), paint)
     }
 
-    /**
-     * Draw a region of an image
-     */
     fun drawRegion(
         src: Image,
         x_src: Int, y_src: Int,
@@ -277,24 +200,17 @@ class Graphics(private val androidCanvas: AndroidCanvas, private val paint: Pain
         x_dest: Int, y_dest: Int,
         anchor: Int
     ) {
-        // TODO: Implement transform support
         val bitmap = src.getBitmap() ?: return
         val srcRect = Rect(x_src, y_src, x_src + width, y_src + height)
         val dstRect = Rect(x_dest, y_dest, x_dest + width, y_dest + height)
         androidCanvas.drawBitmap(bitmap, srcRect, dstRect, paint)
     }
 
-    /**
-     * Draw RGB data
-     */
     fun drawRGB(rgbData: IntArray, offset: Int, scanlength: Int, x: Int, y: Int, width: Int, height: Int, processAlpha: Boolean) {
         val bitmap = Bitmap.createBitmap(rgbData, offset, scanlength, width, height, Bitmap.Config.ARGB_8888)
         androidCanvas.drawBitmap(bitmap, (x + translateX).toFloat(), (y + translateY).toFloat(), paint)
     }
 
-    /**
-     * Set clip region
-     */
     fun setClip(x: Int, y: Int, width: Int, height: Int) {
         clipX = x + translateX
         clipY = y + translateY
@@ -303,29 +219,11 @@ class Graphics(private val androidCanvas: AndroidCanvas, private val paint: Pain
         androidCanvas.clipRect(clipX, clipY, clipX + clipWidth, clipY + clipHeight)
     }
 
-    /**
-     * Get clip X
-     */
     fun getClipX(): Int = clipX - translateX
-
-    /**
-     * Get clip Y
-     */
     fun getClipY(): Int = clipY - translateY
-
-    /**
-     * Get clip width
-     */
     fun getClipWidth(): Int = clipWidth
-
-    /**
-     * Get clip height
-     */
     fun getClipHeight(): Int = clipHeight
 
-    /**
-     * Clip a rectangle
-     */
     fun clipRect(x: Int, y: Int, width: Int, height: Int) {
         androidCanvas.clipRect(
             x + translateX,
@@ -335,32 +233,14 @@ class Graphics(private val androidCanvas: AndroidCanvas, private val paint: Pain
         )
     }
 
-    /**
-     * Translate coordinate system
-     */
     fun translate(x: Int, y: Int) {
         translateX += x
         translateY += y
         androidCanvas.translate(x.toFloat(), y.toFloat())
     }
 
-    /**
-     * Get translate X
-     */
     fun getTranslateX(): Int = translateX
-
-    /**
-     * Get translate Y
-     */
     fun getTranslateY(): Int = translateY
-
-    /**
-     * Get canvas width
-     */
     fun getWidth(): Int = androidCanvas.width
-
-    /**
-     * Get canvas height
-     */
     fun getHeight(): Int = androidCanvas.height
 }
