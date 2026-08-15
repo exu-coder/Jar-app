@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,13 +31,11 @@ fun VirtualKeypad(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // D-Pad + Action buttons row
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // D-Pad
             DPad(
                 onUp = { onKeyPress(-1); onKeyRelease(-1) },
                 onDown = { onKeyPress(-2); onKeyRelease(-2) },
@@ -47,14 +44,12 @@ fun VirtualKeypad(
                 onCenter = { onKeyPress(-5); onKeyRelease(-5) }
             )
 
-            // Action buttons
             ActionButtons(
                 onSoftLeft = { onKeyPress(-6); onKeyRelease(-6) },
                 onSoftRight = { onKeyPress(-7); onKeyRelease(-7) }
             )
         }
 
-        // Number pad
         NumberPad(
             onKeyPress = onKeyPress,
             onKeyRelease = onKeyRelease
@@ -111,7 +106,7 @@ private fun NumberPad(
                     val keyCode = when (key) {
                         "*" -> 42
                         "#" -> 35
-                        else -> key.toInt() + 48 // ASCII offset
+                        else -> key.toInt() + 48
                     }
                     KeyButton(
                         label = key,
