@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#0066CC</color>
+    <color name="primary_dark">#004C99</color>
+    <color name="accent">#00CCFF</color>
+    <color name="background_dark">#0A0A1A</color>
+    <color name="surface_dark">#12122A</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B0B0C0</color>
+    <color name="neon_blue">#00D4FF</color>
+    <color name="neon_purple">#9D4EDD</color>
+    <color name="neon_cyan">#00F5D4</color>
+</resources>
