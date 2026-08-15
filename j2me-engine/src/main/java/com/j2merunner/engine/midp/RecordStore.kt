@@ -16,10 +16,16 @@ class RecordStore private constructor(
 
     companion object {
         private val openStores = mutableMapOf<String, RecordStore>()
+        private var appContext: Context? = null
+
+        fun initialize(context: Context) {
+            appContext = context.applicationContext
+        }
 
         fun openRecordStore(recordStoreName: String, createIfNecessary: Boolean): RecordStore {
+            val ctx = appContext ?: throw RecordStoreException("RecordStore not initialized. Call initialize() first.")
             return openStores.getOrPut(recordStoreName) {
-                RecordStore(recordStoreName, com.j2merunner.app.J2MERunnerApp.instance)
+                RecordStore(recordStoreName, ctx)
             }
         }
 
@@ -32,13 +38,15 @@ class RecordStore private constructor(
         }
 
         fun deleteRecordStore(recordStoreName: String) {
+            val ctx = appContext ?: return
             openStores.remove(recordStoreName)
-            val dir = File(com.j2merunner.app.J2MERunnerApp.instance.filesDir, "rms")
+            val dir = File(ctx.filesDir, "rms")
             File(dir, "$recordStoreName.rms").delete()
         }
 
         fun listRecordStores(): Array<String>? {
-            val dir = File(com.j2merunner.app.J2MERunnerApp.instance.filesDir, "rms")
+            val ctx = appContext ?: return null
+            val dir = File(ctx.filesDir, "rms")
             return dir.listFiles()?.map { it.nameWithoutExtension }?.toTypedArray()
         }
     }
