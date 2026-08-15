@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">𝐉𝟐𝐌𝐄 • 𝐑𝐔𝐍𝐍𝐄𝐑</string>
+    <string name="app_tagline">Run • Play • Enjoy</string>
+    <string name="select_jar">Select JAR Game</string>
+    <string name="browse">Browse</string>
+    <string name="recent_games">Recent Games</string>
+    <string name="no_games">No games found</string>
+    <string name="load_game">Load Game</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="virtual_keypad">Virtual Keypad</string>
+    <string name="sound">Sound</string>
+    <string name="vibration">Vibration</string>
+    <string name="screen_scaling">Screen Scaling</string>
+    <string name="key_mapping">Key Mapping</string>
+</resources>
