@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import com.j2merunner.app.ui.screens.GamePlayerScreen
 
 class GameActivity : ComponentActivity() {
-
     companion object {
         const val EXTRA_JAR_PATH = "jar_path"
     }
