@@ -84,9 +84,7 @@ abstract class Layer {
     @set:JvmName("setHeight")
     var height: Int = 0
     
-    @get:JvmName("isVisible")
-    @set:JvmName("setVisible")
-    var visible: Boolean = true
+    var isVisible: Boolean = true
     
     fun setPosition(x: Int, y: Int) {
         this.x = x
