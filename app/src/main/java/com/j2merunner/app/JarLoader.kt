@@ -1,15 +1,9 @@
 package com.j2merunner.app
 
-import com.j2merunner.engine.midp.MIDlet
-import dalvik.system.DexClassLoader
 import java.io.File
 import java.util.jar.JarFile
 
-/**
- * Loads JAR files, extracts metadata, and prepares for execution
- */
 class JarLoader {
-
     data class JarInfo(
         val file: File,
         val name: String,
@@ -30,13 +24,11 @@ class JarLoader {
             val vendor = attributes.getValue("MIDlet-Vendor") ?: "Unknown"
             val version = attributes.getValue("MIDlet-Version") ?: "1.0"
 
-            // Parse MIDlet-1: Name, Icon, Class
             val midlet1 = attributes.getValue("MIDlet-1") ?: return null
             val parts = midlet1.split(",").map { it.trim() }
             val midletClass = parts.getOrNull(2) ?: parts.getOrNull(0) ?: return null
             val iconPath = parts.getOrNull(1)?.takeIf { it.isNotEmpty() && it != "null" }
 
-            // Extract JAR contents
             val extractDir = File(jarFile.parentFile, ".extracted/${jarFile.nameWithoutExtension}")
             extractDir.mkdirs()
 
@@ -66,15 +58,5 @@ class JarLoader {
             e.printStackTrace()
             null
         }
-    }
-
-    fun createClassLoader(extractedDir: File): ClassLoader {
-        val dexFile = File(extractedDir, "classes.dex")
-        return DexClassLoader(
-            dexFile.absolutePath,
-            extractedDir.absolutePath,
-            null,
-            javaClass.classLoader
-        )
     }
 }
