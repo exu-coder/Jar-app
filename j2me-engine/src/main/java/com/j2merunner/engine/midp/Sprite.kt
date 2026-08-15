@@ -41,10 +41,13 @@ class Sprite(image: Image) : Layer() {
         sequenceIndex = index
     }
 
+    @JvmName("getFrameIndex")
     fun getFrame(): Int = sequenceIndex
 
+    @JvmName("getRawFrameCountValue")
     fun getRawFrameCount(): Int = 1 // TODO: Implement frame extraction
 
+    @JvmName("getFrameSequenceLengthValue")
     fun getFrameSequenceLength(): Int = frameSequence?.size ?: 0
 
     fun defineCollisionRectangle(x: Int, y: Int, width: Int, height: Int) {
@@ -68,28 +71,39 @@ class Sprite(image: Image) : Layer() {
  * Base class for game layers
  */
 abstract class Layer {
-    protected var x = 0
-    protected var y = 0
-    protected var width = 0
-    protected var height = 0
-    protected var visible = true
+    protected var layerX = 0
+    protected var layerY = 0
+    protected var layerWidth = 0
+    protected var layerHeight = 0
+    protected var layerVisible = true
 
     fun setPosition(x: Int, y: Int) {
-        this.x = x
-        this.y = y
+        this.layerX = x
+        this.layerY = y
     }
 
     fun move(dx: Int, dy: Int) {
-        x += dx
-        y += dy
+        layerX += dx
+        layerY += dy
     }
 
-    fun getX(): Int = x
-    fun getY(): Int = y
-    fun getWidth(): Int = width
-    fun getHeight(): Int = height
-    fun setVisible(visible: Boolean) { this.visible = visible }
-    fun isVisible(): Boolean = visible
+    @JvmName("getLayerX")
+    fun getX(): Int = layerX
+
+    @JvmName("getLayerY")
+    fun getY(): Int = layerY
+
+    @JvmName("getLayerWidth")
+    fun getWidth(): Int = layerWidth
+
+    @JvmName("getLayerHeight")
+    fun getHeight(): Int = layerHeight
+
+    @JvmName("setLayerVisible")
+    fun setVisible(visible: Boolean) { this.layerVisible = visible }
+
+    @JvmName("isLayerVisible")
+    fun isVisible(): Boolean = layerVisible
 
     abstract fun paint(g: Graphics)
 }
@@ -112,6 +126,7 @@ class LayerManager {
         layers.remove(layer)
     }
 
+    @JvmName("getLayerManagerSize")
     fun getSize(): Int = layers.size
 
     fun getLayerAt(index: Int): Layer = layers[index]
@@ -134,8 +149,8 @@ class TiledLayer(columns: Int, rows: Int, image: Image, tileWidth: Int, tileHeig
     private val animatedTiles = mutableMapOf<Int, Int>()
 
     init {
-        width = columns * tileWidth
-        height = rows * tileHeight
+        layerWidth = columns * tileWidth
+        layerHeight = rows * tileHeight
     }
 
     fun setCell(col: Int, row: Int, tileIndex: Int) {
@@ -144,6 +159,7 @@ class TiledLayer(columns: Int, rows: Int, image: Image, tileWidth: Int, tileHeig
         }
     }
 
+    @JvmName("getTiledCell")
     fun getCell(col: Int, row: Int): Int {
         return if (row in cellMatrix.indices && col in cellMatrix[0].indices) {
             cellMatrix[row][col]
@@ -168,6 +184,7 @@ class TiledLayer(columns: Int, rows: Int, image: Image, tileWidth: Int, tileHeig
         animatedTiles[animatedTileIndex] = staticTileIndex
     }
 
+    @JvmName("getAnimatedTileValue")
     fun getAnimatedTile(animatedTileIndex: Int): Int {
         return animatedTiles[animatedTileIndex] ?: 0
     }
