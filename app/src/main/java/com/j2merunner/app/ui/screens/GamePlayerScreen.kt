@@ -47,6 +47,7 @@ fun GamePlayerScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
+            // Game Canvas Area
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -54,17 +55,23 @@ fun GamePlayerScreen(
                     .background(Color.Black),
                 contentAlignment = Alignment.Center
             ) {
+                val displayText = "Game Canvas\n(JAR: " + jarPath + ")"
                 Text(
-                    "Game Canvas
-(JAR: $jarPath)",
+                    text = displayText,
                     color = Color(0xFF00D4FF)
                 )
+                // TODO: Integrate GameCanvasView here
             }
 
+            // Virtual Keypad
             if (showKeypad) {
                 VirtualKeypad(
-                    onKeyPress = {},
-                    onKeyRelease = {}
+                    onKeyPress = { keyCode ->
+                        // TODO: Forward to game engine
+                    },
+                    onKeyRelease = { keyCode ->
+                        // TODO: Forward to game engine
+                    }
                 )
             }
         }
