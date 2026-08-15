@@ -27,7 +27,7 @@ class Date {
 
     fun after(when_: Date): Boolean = time > when_.time
     fun before(when_: Date): Boolean = time < when_.time
-    fun equals(obj: Any?): Boolean = obj is Date && time == obj.time
-    fun hashCode(): Int = (time xor (time ushr 32)).toInt()
-    fun toString(): String = java.util.Date(time).toString()
+    override fun equals(obj: Any?): Boolean = obj is Date && time == obj.time
+    override fun hashCode(): Int = (time xor (time ushr 32)).toInt()
+    override fun toString(): String = java.util.Date(time).toString()
 }
